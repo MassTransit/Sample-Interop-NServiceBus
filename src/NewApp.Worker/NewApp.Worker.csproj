@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-NewApp.Worker-8ec1317f-da35-4b25-969a-e706ac52bf92</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.Interop.NServiceBus" Version="8.0.9-develop.669" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.9-develop.657" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LegacyApp.Contracts\LegacyApp.Contracts.csproj" />
+  </ItemGroup>
+</Project>
