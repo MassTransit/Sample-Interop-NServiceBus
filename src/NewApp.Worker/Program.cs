@@ -1,6 +1,5 @@
 using MassTransit;
 using NewApp.Worker;
-using NServiceBus;
 
 var host = Host.CreateDefaultBuilder(args)
     .UseMassTransit((_, x) =>
@@ -12,9 +11,6 @@ var host = Host.CreateDefaultBuilder(args)
 
         x.UsingRabbitMq((context, cfg) =>
         {
-            cfg.Publish<IEvent>(p => p.Exclude = true);
-            cfg.Publish<IMessage>(p => p.Exclude = true);
-
             cfg.UseNServiceBusJsonSerializer();
 
             cfg.ConfigureEndpoints(context);
@@ -25,7 +21,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddOptions<RabbitMqTransportOptions>()
             .Configure(options =>
             {
-                options.Host = "localhost";
+                options.Host = "192.168.1.25";
             });
     })
     .Build();

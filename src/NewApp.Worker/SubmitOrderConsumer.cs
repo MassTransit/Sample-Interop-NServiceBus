@@ -1,3 +1,6 @@
+using LegacyApp.Contracts.Commands;
+using LegacyApp.Contracts.Events;
+
 namespace NewApp.Worker;
 
 using LegacyApp.Contracts;
@@ -18,10 +21,8 @@ public class SubmitOrderConsumer :
     {
         _logger.LogInformation("Received SubmitOrder, OrderNumber = {OrderNumber}", context.Message.OrderNumber);
 
-        var requestKey = context.Headers.Get<string>("X-Request-Key");
-
-        _logger.LogInformation("Responding with OrderSubmissionAccepted and publishing OrderSubmitted, OrderNumber = {OrderNumber}, RequestKey = {RequestKey}",
-            context.Message.OrderNumber, requestKey);
+        _logger.LogInformation("Responding with OrderSubmissionAccepted and publishing OrderSubmitted, OrderNumber = {OrderNumber}",
+            context.Message.OrderNumber);
 
         return Task.WhenAll(
             context.Publish(new OrderSubmitted { OrderNumber = context.Message.OrderNumber }),

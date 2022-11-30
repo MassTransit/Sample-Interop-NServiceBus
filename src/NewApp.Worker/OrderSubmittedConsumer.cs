@@ -1,3 +1,5 @@
+using LegacyApp.Contracts.Events;
+
 namespace NewApp.Worker;
 
 using LegacyApp.Contracts;
