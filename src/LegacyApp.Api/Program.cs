@@ -19,7 +19,7 @@ builder.Host.UseNServiceBus(_ =>
         .DefiningEventsAs(t => t.Namespace != null && t.Namespace.StartsWith("LegacyApp.Contracts.Events"));
 
     var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
-    transport.ConnectionString("host=192.168.1.25");
+    transport.ConnectionString("host=localhost;username=guest;password=guest;virtualhost=/");
 
     transport.UseConventionalRoutingTopology(QueueType.Classic);
 

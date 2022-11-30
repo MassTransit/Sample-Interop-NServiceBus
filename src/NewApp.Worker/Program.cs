@@ -21,7 +21,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddOptions<RabbitMqTransportOptions>()
             .Configure(options =>
             {
-                options.Host = "192.168.1.25";
+                options.Host = "localhost";
             });
     })
     .Build();

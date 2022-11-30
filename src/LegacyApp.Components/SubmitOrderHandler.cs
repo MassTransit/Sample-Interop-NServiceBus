@@ -28,11 +28,16 @@ public class SubmitOrderHandler :
         //     throw new Exception("Transient Failure");
         // }
 
-        _log.InfoFormat("Replying with OrderSubmissionAccepted and publishing OrderSubmitted, OrderNumber = {OrderNumber}",
-            message.OrderNumber);
+        var requestKey = context.MessageHeaders["X-Request-Key"];
+
+        _log.InfoFormat("Replying with OrderSubmissionAccepted and publishing OrderSubmitted, OrderNumber = {OrderNumber}, RequestKey = {RequestKey}",
+            message.OrderNumber, requestKey);
+
+        ReplyOptions replyOptions = new();
+        replyOptions.SetHeader("X-Request-Key", requestKey);
 
         return Task.WhenAll(
             context.Publish(new OrderSubmitted { OrderNumber = message.OrderNumber }),
-            context.Reply(new OrderSubmissionAccepted { OrderNumber = message.OrderNumber }));
+            context.Reply(new OrderSubmissionAccepted { OrderNumber = message.OrderNumber }, replyOptions));
     }
 }

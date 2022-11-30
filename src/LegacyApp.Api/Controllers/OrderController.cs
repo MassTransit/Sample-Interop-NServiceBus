@@ -22,13 +22,18 @@ public class OrderController :
     [HttpPost(Name = "SubmitOrder")]
     public async Task<IActionResult> PostOrder(OrderModel order, [FromServices] IMessageSession session)
     {
-        _logger.LogInformation("Sending SubmitOrder command, OrderNumber is {OrderNumber}", order.OrderNumber);
+        var requestKey = Guid.NewGuid().ToString();
+
+        SendOptions sendOptions = new();
+        sendOptions.SetHeader("X-Request-Key", requestKey);
+
+        _logger.LogInformation("Sending SubmitOrder command, RequestKey is {RequestKey}, OrderNumber is {OrderNumber}", requestKey, order.OrderNumber);
 
         await session.Send(new SubmitOrder
         {
             OrderNumber = order.OrderNumber,
             Amount = order.Amount
-        });
+        }, sendOptions);
 
         return Accepted();
     }
