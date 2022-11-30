@@ -1,6 +1,7 @@
 namespace NewApp.Worker;
 
-using LegacyApp.Contracts;
+using LegacyApp.Contracts.Commands;
+using LegacyApp.Contracts.Events;
 using MassTransit;
 
 
@@ -16,11 +17,10 @@ public class SubmitOrderConsumer :
 
     public Task Consume(ConsumeContext<SubmitOrder> context)
     {
-        _logger.LogInformation("Received SubmitOrder, OrderNumber = {OrderNumber}", context.Message.OrderNumber);
-
         var requestKey = context.Headers.Get<string>("X-Request-Key");
 
-        _logger.LogInformation("Responding with OrderSubmissionAccepted and publishing OrderSubmitted, OrderNumber = {OrderNumber}, RequestKey = {RequestKey}",
+        _logger.LogInformation(
+            "Responding with OrderSubmissionAccepted and publishing OrderSubmitted, OrderNumber = {OrderNumber}, RequestKey = {RequestKey}",
             context.Message.OrderNumber, requestKey);
 
         return Task.WhenAll(

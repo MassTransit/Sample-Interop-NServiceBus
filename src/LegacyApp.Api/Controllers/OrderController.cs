@@ -1,6 +1,6 @@
 namespace LegacyApp.Api.Controllers;
 
-using Contracts;
+using Contracts.Commands;
 using Microsoft.AspNetCore.Mvc;
 using NServiceBus;
 

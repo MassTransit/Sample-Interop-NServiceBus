@@ -1,6 +1,7 @@
 namespace LegacyApp.Components;
 
-using Contracts;
+using Contracts.Commands;
+using Contracts.Events;
 using NServiceBus;
 using NServiceBus.Logging;
 
@@ -32,7 +33,7 @@ public class SubmitOrderHandler :
 
         ReplyOptions replyOptions = new();
         replyOptions.SetHeader("X-Request-Key", requestKey);
-        
+
         return Task.WhenAll(
             context.Publish(new OrderSubmitted { OrderNumber = message.OrderNumber }),
             context.Reply(new OrderSubmissionAccepted { OrderNumber = message.OrderNumber }, replyOptions));

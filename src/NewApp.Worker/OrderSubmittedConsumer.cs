@@ -1,6 +1,6 @@
 namespace NewApp.Worker;
 
-using LegacyApp.Contracts;
+using LegacyApp.Contracts.Events;
 using MassTransit;
 
 

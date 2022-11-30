@@ -1,4 +1,4 @@
-using LegacyApp.Contracts;
+using LegacyApp.Contracts.Commands;
 using NServiceBus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +11,11 @@ builder.Host.UseNServiceBus(_ =>
 
     endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
     endpointConfiguration.EnableInstallers();
+
+    endpointConfiguration.Conventions()
+        .DefiningCommandsAs(t => t.Namespace != null && t.Namespace.StartsWith("LegacyApp.Contracts.Commands"));
+    endpointConfiguration.Conventions()
+        .DefiningEventsAs(t => t.Namespace != null && t.Namespace.StartsWith("LegacyApp.Contracts.Events"));
 
     TransportExtensions<RabbitMQTransport>? transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
     transport.ConnectionString("host=localhost;username=guest;password=guest;virtualhost=/");

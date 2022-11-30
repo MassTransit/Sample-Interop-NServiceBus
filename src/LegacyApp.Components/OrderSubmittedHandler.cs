@@ -1,6 +1,6 @@
 ﻿namespace LegacyApp.Components;
 
-using Contracts;
+using Contracts.Events;
 using NServiceBus;
 using NServiceBus.Logging;
 
